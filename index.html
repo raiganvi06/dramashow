@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Drama Show Booking</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      text-align: center;
+      background: #bc45dd;
+      margin: 0;
+      padding: 20px;
+    }
+
+    h1 {
+      color: #333;
+    }
+
+    .show-list {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 20px;
+    }
+
+    .show {
+      background: #b0D1ca;
+      padding: 20px;
+      border-radius: 10px;
+      width: 250px;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    }
+
+    .book-button {
+      background-color: #007BAA;
+      color: white;
+      padding: 10px 15px;
+      text-decoration: none;
+      border-radius: 5px;
+      display: inline-block;
+      margin-top: 10px;
+      border: none;
+      cursor: pointer;
+    }
+
+    .booking-form {
+      display: flex;
+      flex-direction: column;
+      max-width: 400px;
+      margin: auto;
+    }
+
+    .booking-form label,
+    .booking-form input,
+    .booking-form select {
+      margin: 10px 0;
+      padding: 8px;
+      font-size: 16px;
+    }
+
+    .hidden {
+      display: none;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Home Section -->
+  <section id="home-section">
+    <h1>Welcome to Theatre Drama Booking</h1>
+    <div class="show-list">
+      <div class="show">
+        <h2>Romeo and Juliet</h2>
+        <p>Price: ₹500</p>
+        <button class="book-button" onclick="goToBooking('Romeo and Juliet')">Book Now</button>
+      </div>
+      <div class="show">
+        <h2>Hamlet</h2>
+        <p>Price: ₹600</p>
+        <button class="book-button" onclick="goToBooking('Hamlet')">Book Now</button>
+      </div>
+      <div class="show">
+        <h2>The Merchant of Venice</h2>
+        <p>Price: ₹550</p>
+        <button class="book-button" onclick="goToBooking('The Merchant of Venice')">Book Now</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- Booking Section -->
+  <section id="booking-section" class="hidden">
+    <h1>Enter Booking Details</h1>
+    <form id="booking-form" class="booking-form">
+      <label for="name">Full Name:</label>
+      <input type="text" id="name" name="name" required />
+
+      <label for="show">Select Show:</label>
+      <select id="show" name="show">
+        <option value="Romeo and Juliet">Romeo and Juliet</option>
+        <option value="Hamlet">Hamlet</option>
+        <option value="The Merchant of Venice">The Merchant of Venice</option>
+      </select>
+
+      <label for="date">Date:</label>
+      <input type="date" id="date" name="date" required />
+
+      <label for="tickets">Number of Tickets:</label>
+      <input type="number" id="tickets" name="tickets" min="1" required />
+
+      <button type="submit" class="book-button">Confirm Booking</button>
+    </form>
+  </section>
+
+  <!-- Confirmation Section -->
+  <section id="confirmation-section" class="hidden">
+    <h1>Booking Confirmed!</h1>
+    <p id="confirmation-message"></p>
+    <button class="book-button" onclick="goHome()">Book Another Show</button>
+  </section>
+
+  <script>
+    function goToBooking(showName) {
+      document.getElementById("home-section").classList.add("hidden");
+      document.getElementById("booking-section").classList.remove("hidden");
+      document.getElementById("show").value = showName;
+    }
+
+    function goHome() {
+      document.getElementById("confirmation-section").classList.add("hidden");
+      document.getElementById("home-section").classList.remove("hidden");
+      document.getElementById("booking-form").reset();
+    }
+
+    document.getElementById("booking-form").addEventListener("submit", function (e) {
+      e.preventDefault();
+
+      const name = document.getElementById("name").value;
+      const show = document.getElementById("show").value;
+      const date = document.getElementById("date").value;
+      const tickets = document.getElementById("tickets").value;
+
+      const message = `Thank you, ${name}! Your booking for <strong>${show}</strong> on <strong>${date}</strong> for <strong>${tickets}</strong> ticket(s) is confirmed. Enjoy the show!`;
+
+      document.getElementById("booking-section").classList.add("hidden");
+      document.getElementById("confirmation-section").classList.remove("hidden");
+      document.getElementById("confirmation-message").innerHTML = message;
+    });
+  </script>
+</body>
+</html>
